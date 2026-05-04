@@ -16,7 +16,7 @@ const uploadOnClodinary = async (localFilePath) => {
             // upload the file on cloudinary 
             const response = await cloudinary.uploader
                 .upload(localFilePath, {
-                    resource_type: "video",
+                    resource_type: "auto",
                 })
             //File has been uploded successfully 
             console.log("File has been uploded successfully", response.url);
