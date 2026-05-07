@@ -1,5 +1,10 @@
 import { v2 as cloudinary } from "cloudinary";
+import crypto from "crypto";
 import fs from "fs";
+
+if (!globalThis.crypto) {
+  globalThis.crypto = crypto.webcrypto;
+}
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
