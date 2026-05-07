@@ -4,6 +4,9 @@ import { User } from "../models/user.model.js";
 import { uploadOnClodinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
+const generateAccessAndReferenceTokens = async(userId)
+
+
 const registerUser = asyncHandler(async (req, res) => {
   const { userName, email, fullName, password } = req.body;
   // console.log("email", email);
@@ -72,4 +75,39 @@ const registerUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, createdUser, "User registered successfully!"));
 });
 
-export { registerUser };
+
+const loginUser = asyncHandler(async (req, res) => {
+  // req body ---> data
+  // username or email
+  // find the user 
+  // password check
+  // access and refresh token
+  // send cookie
+
+  const { userName, email, password } = req.body;
+
+  if (!userName || !email) {
+    throw new ApiError(400, "Username or password is required")
+  }
+
+  const user = await User.findOne({
+    $or: [{ userName }, { email }]
+  })
+
+  if (!user) {
+    throw new ApiError(400, "User does not exist")
+  }
+
+  const isPasswordValid = await user.isPasswordCorrect(password)
+
+  if (!isPasswordValid) {
+    throw new ApiError(401, "Invalid user credentials")
+  }
+
+})
+
+
+export {
+  registerUser,
+  loginUser
+};
