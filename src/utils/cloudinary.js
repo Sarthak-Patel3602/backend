@@ -17,7 +17,8 @@ const uploadOnClodinary = async (localFilePath) => {
         resource_type: "auto",
       });
       //File has been uploded successfully
-      console.log("File has been uploded successfully", response.url);
+      // console.log("File has been uploded successfully", response.url);
+      fs.unlinkSync(localFilePath);
       return response;
     }
   } catch (error) {
